@@ -18,8 +18,9 @@ import { SkillsStep } from "./steps/skills-step"
 import { PortfolioStep } from "./steps/portfolio-step"
 import type { PortfolioProject } from "./portfolio-builder"
 import { login, register } from "@/services/auth"
-import { createFullMasterProfile } from "@/services/profile"
+import { createFullMasterProfile, updateProfileImage } from "@/services/profile"
 import { UserRole } from "@/types/user-role.enum"
+import { base64ToFile } from "@/api/helpers/convert"
 
 const steps = [
   { id: 1, label: "Аккаунт" },
@@ -67,6 +68,7 @@ export function FreelancerSignupWizard() {
     description: "",
     location: "",
     experience: "",
+    avatarUrl:""
   })
   const [profileErrors, setProfileErrors] = useState<Partial<Record<keyof ProfileData, string>>>({})
   const [profileTouched, setProfileTouched] = useState<Partial<Record<keyof ProfileData, boolean>>>({})
@@ -283,7 +285,6 @@ export function FreelancerSignupWizard() {
     setIsConfirmationDialogOpen(false)
     setCurrentStep(1)
   }
-  useEffect(() => {console.log(currentStep)},[currentStep])
   const handleSubmit = async () => {
     if (!isAccountRegistered) {
       setSubmitError("Сначала завершите шаг создания аккаунта.")
@@ -309,13 +310,28 @@ export function FreelancerSignupWizard() {
     setSubmitError("")
     isFinalProfileRequestInFlight.current = true
     setIsSubmitting(true)
+    
     try {
+      // Сначала создаем профиль мастера
       const profilePayload = buildCreateFullMasterProfileAfterFreelancerSignup(
         { fullName: accountData.fullName },
         profileData,
         { skills }
       )
+      
       await createFullMasterProfile(profilePayload)
+      
+      // После успешного создания профиля загружаем изображение
+      if (profileData.avatarUrl && profileData.avatarUrl.startsWith('data:image')) {
+        try {
+          const file = base64ToFile(profileData.avatarUrl, 'profile-avatar.jpg')
+          await updateProfileImage(file)
+        } catch (imageError) {
+          console.error('Ошибка при загрузке изображения:', imageError)
+          // Не блокируем успех, но можно показать уведомление
+        }
+      }
+      
       setIsProfileCreated(true)
       setIsConfirmationDialogOpen(true)
     } catch (error: unknown) {

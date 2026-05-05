@@ -142,7 +142,7 @@ export function PortfolioBuilder({ projects, onProjectsChange }: PortfolioBuilde
             />
           </div>
 
-          <div className="space-y-2">
+          {/* <div className="space-y-2">
             <Label htmlFor="project-link" className="text-sm font-medium">
               Ссылка
             </Label>
@@ -154,7 +154,7 @@ export function PortfolioBuilder({ projects, onProjectsChange }: PortfolioBuilde
               onChange={(e) => setNewProject((prev) => ({ ...prev, link: e.target.value }))}
               className="h-11"
             />
-          </div>
+          </div> */}
 
           <div className="space-y-2">
             <Label className="text-sm font-medium">Изображение</Label>
