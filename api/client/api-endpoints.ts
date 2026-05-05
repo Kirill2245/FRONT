@@ -19,5 +19,6 @@ export const API_ENDPOINTS = {
     CREATE_MASTER: "/user-profile/create-master",
     UPDATE_MASTER: "/user-profile/update-master",
     UPDATE_IMAGE: "/user-profile/update-image",
+    CREATE_PORTFOLIO_POST: "/user-profile/portfolio/create-post"
   },
 } as const

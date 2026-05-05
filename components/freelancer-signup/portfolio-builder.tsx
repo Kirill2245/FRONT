@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Plus, Trash2, ImageIcon, ExternalLink } from "lucide-react"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
@@ -9,11 +9,12 @@ import { Label } from "@/components/ui/label"
 import { cn } from "@/lib/utils"
 
 export interface PortfolioProject {
-  id: string
+  id?: string
   title: string
   description: string
   link: string
-  imageUrl: string
+  imageFile?: File  // оригинальный файл для отправки
+  imagePreviewUrl?: string  // для превью
 }
 
 interface PortfolioBuilderProps {
@@ -27,32 +28,67 @@ export function PortfolioBuilder({ projects, onProjectsChange }: PortfolioBuilde
     title: "",
     description: "",
     link: "",
-    imageUrl: "",
+    imageFile: undefined,
+    imagePreviewUrl: "",
   })
+
+  // Очищаем URL превью при размонтировании
+  useEffect(() => {
+    return () => {
+      projects.forEach(project => {
+        if (project.imagePreviewUrl) {
+          URL.revokeObjectURL(project.imagePreviewUrl)
+        }
+      })
+    }
+  }, [projects])
 
   const addProject = () => {
     if (newProject.title.trim()) {
       onProjectsChange([
         ...projects,
-        { ...newProject, id: Date.now().toString() },
+        { 
+          ...newProject, 
+          id: Date.now().toString(),
+          imagePreviewUrl: newProject.imagePreviewUrl 
+        },
       ])
-      setNewProject({ title: "", description: "", link: "", imageUrl: "" })
+      // Не отзываем URL, так как он используется в превью
+      setNewProject({ 
+        title: "", 
+        description: "", 
+        link: "", 
+        imageFile: undefined,
+        imagePreviewUrl: "" 
+      })
       setIsAddingProject(false)
     }
   }
 
   const removeProject = (id: string) => {
+    const project = projects.find(p => p.id === id)
+    if (project?.imagePreviewUrl) {
+      URL.revokeObjectURL(project.imagePreviewUrl)
+    }
     onProjectsChange(projects.filter((p) => p.id !== id))
   }
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
     if (file) {
-      const reader = new FileReader()
-      reader.onloadend = () => {
-        setNewProject((prev) => ({ ...prev, imageUrl: reader.result as string }))
+      // Создаем превью URL
+      const previewUrl = URL.createObjectURL(file)
+      
+      // Отзываем старый URL если есть
+      if (newProject.imagePreviewUrl) {
+        URL.revokeObjectURL(newProject.imagePreviewUrl)
       }
-      reader.readAsDataURL(file)
+      
+      setNewProject((prev) => ({ 
+        ...prev, 
+        imageFile: file,
+        imagePreviewUrl: previewUrl 
+      }))
     }
   }
 
@@ -66,10 +102,10 @@ export function PortfolioBuilder({ projects, onProjectsChange }: PortfolioBuilde
               className="group relative rounded-xl border border-border bg-card p-4 transition-shadow hover:shadow-md"
             >
               <div className="flex gap-4">
-                {project.imageUrl ? (
+                {project.imagePreviewUrl ? (
                   <div className="h-20 w-20 shrink-0 overflow-hidden rounded-lg bg-muted">
                     <img
-                      src={project.imageUrl}
+                      src={project.imagePreviewUrl}
                       alt={project.title}
                       className="h-full w-full object-cover"
                     />
@@ -103,7 +139,7 @@ export function PortfolioBuilder({ projects, onProjectsChange }: PortfolioBuilde
                   variant="ghost"
                   size="icon"
                   className="h-8 w-8 shrink-0 text-muted-foreground hover:text-destructive"
-                  onClick={() => removeProject(project.id)}
+                  onClick={() => removeProject(project.id!)}
                 >
                   <Trash2 className="h-4 w-4" />
                 </Button>
@@ -159,16 +195,25 @@ export function PortfolioBuilder({ projects, onProjectsChange }: PortfolioBuilde
           <div className="space-y-2">
             <Label className="text-sm font-medium">Изображение</Label>
             <div className="flex items-center gap-4">
-              {newProject.imageUrl ? (
+              {newProject.imagePreviewUrl ? (
                 <div className="relative h-20 w-20 overflow-hidden rounded-lg">
                   <img
-                    src={newProject.imageUrl}
+                    src={newProject.imagePreviewUrl}
                     alt="Preview"
                     className="h-full w-full object-cover"
                   />
                   <button
                     type="button"
-                    onClick={() => setNewProject((prev) => ({ ...prev, imageUrl: "" }))}
+                    onClick={() => {
+                      if (newProject.imagePreviewUrl) {
+                        URL.revokeObjectURL(newProject.imagePreviewUrl)
+                      }
+                      setNewProject((prev) => ({ 
+                        ...prev, 
+                        imageFile: undefined,
+                        imagePreviewUrl: "" 
+                      }))
+                    }}
                     className="absolute right-1 top-1 rounded-full bg-background/80 p-1 hover:bg-background"
                   >
                     <Trash2 className="h-3 w-3 text-destructive" />
@@ -193,7 +238,7 @@ export function PortfolioBuilder({ projects, onProjectsChange }: PortfolioBuilde
                 </label>
               )}
               <p className="text-sm text-muted-foreground">
-                Загрузите изображение проекта (необязательно)
+                Загрузите изображение проекта (обязательно для показа)
               </p>
             </div>
           </div>
@@ -203,8 +248,17 @@ export function PortfolioBuilder({ projects, onProjectsChange }: PortfolioBuilde
               type="button"
               variant="outline"
               onClick={() => {
+                if (newProject.imagePreviewUrl) {
+                  URL.revokeObjectURL(newProject.imagePreviewUrl)
+                }
                 setIsAddingProject(false)
-                setNewProject({ title: "", description: "", link: "", imageUrl: "" })
+                setNewProject({ 
+                  title: "", 
+                  description: "", 
+                  link: "", 
+                  imageFile: undefined,
+                  imagePreviewUrl: "" 
+                })
               }}
             >
               Отмена
