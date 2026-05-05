@@ -55,17 +55,12 @@ class ProfileApi {
     if (file.size === 0) {
       throw new Error("Пустой файл: выберите другое изображение.")
     }
+    
     const formData = new FormData()
     formData.append("file", file, file.name)
 
-    try {
-      return await apiClient.patchFormData(
-        API_ENDPOINTS.PROFILE.UPDATE_IMAGE,
-        formData
-      )
-    } catch (err) {
-      throw errorProcessing(err, "загрузке изображения профиля")
-    }
+    // Эндпоинт не требует id в URL, так как он берется из токена
+    return apiClient.patchFormData('/users/update-image', formData)
   }
 }
 
