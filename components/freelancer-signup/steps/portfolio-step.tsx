@@ -5,6 +5,7 @@ import { PortfolioBuilder, type PortfolioProject } from "../portfolio-builder"
 interface PortfolioStepProps {
   projects: PortfolioProject[]
   onProjectsChange: (projects: PortfolioProject[]) => void
+  error?: string
 }
 
 export function PortfolioStep({ projects, onProjectsChange }: PortfolioStepProps) {

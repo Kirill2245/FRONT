@@ -21,6 +21,8 @@ import { login, register } from "@/services/auth"
 import { createFullMasterProfile, updateProfileImage } from "@/services/profile"
 import { UserRole } from "@/types/user-role.enum"
 import { base64ToFile } from "@/api/helpers/convert"
+import { portfolioApi } from "@/api/services/portfolio"
+
 
 const steps = [
   { id: 1, label: "Аккаунт" },
@@ -285,71 +287,83 @@ export function FreelancerSignupWizard() {
     setIsConfirmationDialogOpen(false)
     setCurrentStep(1)
   }
-  const handleSubmit = async () => {
-    if (!isAccountRegistered) {
-      setSubmitError("Сначала завершите шаг создания аккаунта.")
-      return
-    }
+  useEffect(() => {console.log(currentStep)},[currentStep])
+const handleSubmit = async () => {
+  if (!isAccountRegistered) {
+    setSubmitError("Сначала завершите шаг создания аккаунта.")
+    return
+  }
 
-    const skillsValidationError = validateSkills()
-    if (skillsValidationError) {
-      setSkillsError(skillsValidationError)
-      return
-    }
+  const skillsValidationError = validateSkills()
+  if (skillsValidationError) {
+    setSkillsError(skillsValidationError)
+    return
+  }
 
-    if (isProfileCreated) {
-      setSubmitError("")
-      setIsConfirmationDialogOpen(true)
-      return
-    }
-
-    if (isFinalProfileRequestInFlight.current) {
-      return
-    }
-
+  if (isProfileCreated) {
     setSubmitError("")
-    isFinalProfileRequestInFlight.current = true
-    setIsSubmitting(true)
+    setIsConfirmationDialogOpen(true)
+    return
+  }
+
+  if (isFinalProfileRequestInFlight.current) {
+    return
+  }
+
+  setSubmitError("")
+  isFinalProfileRequestInFlight.current = true
+  setIsSubmitting(true)
+  
+  try {
+    // Сначала создаем профиль мастера
+    const profilePayload = buildCreateFullMasterProfileAfterFreelancerSignup(
+      { fullName: accountData.fullName },
+      profileData,
+      { skills }
+    )
     
-    try {
-      // Сначала создаем профиль мастера
-      const profilePayload = buildCreateFullMasterProfileAfterFreelancerSignup(
-        { fullName: accountData.fullName },
-        profileData,
-        { skills }
-      )
-      
-      await createFullMasterProfile(profilePayload)
-      
-      // После успешного создания профиля загружаем изображение
-      if (profileData.avatarUrl && profileData.avatarUrl.startsWith('data:image')) {
-        try {
-          const file = base64ToFile(profileData.avatarUrl, 'profile-avatar.jpg')
-          await updateProfileImage(file)
-        } catch (imageError) {
-          console.error('Ошибка при загрузке изображения:', imageError)
-          // Не блокируем успех, но можно показать уведомление
-        }
+    await createFullMasterProfile(profilePayload)
+    
+    // Загружаем изображение профиля, если есть
+    if (profileData.avatarUrl && profileData.avatarUrl.startsWith('data:image')) {
+      try {
+        const file = base64ToFile(profileData.avatarUrl, 'profile-avatar.jpg')
+        await updateProfileImage(file)
+      } catch (imageError) {
+        console.error('Ошибка при загрузке изображения:', imageError)
       }
-      
+    }
+    
+    // Создаем проекты портфолио
+    for (const project of portfolioProjects) {
+      if (project.imageFile) {
+        await portfolioApi.addPortfolioProject({
+          title: project.title,
+          description: project.description,
+          link: project.link || "",
+          img: project.imageFile
+        })
+      }
+    }
+    
+    setIsProfileCreated(true)
+    setIsConfirmationDialogOpen(true)
+  } catch (error: unknown) {
+    if (isProfileAlreadyExistsError(error)) {
       setIsProfileCreated(true)
       setIsConfirmationDialogOpen(true)
-    } catch (error: unknown) {
-      if (isProfileAlreadyExistsError(error)) {
-        setIsProfileCreated(true)
-        setIsConfirmationDialogOpen(true)
-      } else {
-        const message =
-          error instanceof Error
-            ? error.message
-            : "Не удалось сохранить профиль. Попробуйте позже."
-        setSubmitError(message)
-      }
-    } finally {
-      setIsSubmitting(false)
-      isFinalProfileRequestInFlight.current = false
+    } else {
+      const message =
+        error instanceof Error
+          ? error.message
+          : "Не удалось сохранить профиль. Попробуйте позже."
+      setSubmitError(message)
     }
+  } finally {
+    setIsSubmitting(false)
+    isFinalProfileRequestInFlight.current = false
   }
+}
 
   const renderStep = () => {
     switch (currentStep) {

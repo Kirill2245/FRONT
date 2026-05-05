@@ -60,7 +60,7 @@ class ProfileApi {
     formData.append("file", file, file.name)
 
     // Эндпоинт не требует id в URL, так как он берется из токена
-    return apiClient.patchFormData('/users/update-image', formData)
+    return apiClient.patchFormData(API_ENDPOINTS.PROFILE.UPDATE_IMAGE, formData)
   }
 }
 
