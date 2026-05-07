@@ -1,8 +1,12 @@
 import type { Metadata } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
-import { AuthProvider } from '@/context/auth-context'
+import { AuthProvider, useAuth } from '@/context/auth-context'
 import './globals.css'
+
+import { SidebarProvider } from '@/components/ui/sidebar'
+import { Sidebar } from 'lucide-react'
+import { SideBarWrapper } from '@/components/SideBar/SideBarWraper'
 
 const _geist = Geist({ subsets: ["latin"] });
 const _geistMono = Geist_Mono({ subsets: ["latin"] });
@@ -78,7 +82,14 @@ export default function RootLayout({
       </head>
 
       <body className="font-sans antialiased">
-        <AuthProvider>{children}</AuthProvider>
+        
+        <AuthProvider>
+          
+          <SideBarWrapper>
+            {children}
+          </SideBarWrapper>
+
+        </AuthProvider>
         <Analytics />
       </body>
     </html>

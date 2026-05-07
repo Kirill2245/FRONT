@@ -32,14 +32,8 @@ export function EmailConfirmationDialog({
   const [hint, setHint] = useState<string | null>(null)
   const [internalOpen, setInternalOpen] = useState(open)
 
-  // Синхронизируем internalOpen с пропом open
-  useEffect(() => {
-    console.log(`Open prop changed to: ${open}`)
-    setInternalOpen(open)
-  }, [open])
 
   const handleOpenChange = (next: boolean) => {
-    console.log('Dialog onOpenChange:', next)
     if (!next) {
       onClose()
       setInternalOpen(false)

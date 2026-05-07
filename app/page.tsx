@@ -14,12 +14,11 @@ export default function LandingPage() {
     const router = useRouter()
     const { loading, isAuthenticated } = useAuth()
   
-    // Если пользователь уже авторизован - отправляем на coming-soon
-    useEffect(() => {
-      if (!loading && isAuthenticated) {
-        router.replace("/coming-soon")
-      }
-    }, [loading, isAuthenticated, router])
+    // useEffect(() => {
+    //   if (!loading && isAuthenticated) {
+    //     router.replace("/home")
+    //   }
+    // }, [loading, isAuthenticated, router])
   
     if (loading) {
       return (
@@ -29,9 +28,9 @@ export default function LandingPage() {
       )
     }
   
-    if (isAuthenticated) {
-      return null
-    }
+    // if (isAuthenticated) {
+    //   return null
+    // }
   return (
     <div className="flex min-h-screen w-full min-w-0 max-w-full flex-col max-md:overflow-x-hidden">
       <Header />
