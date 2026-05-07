@@ -1,4 +1,5 @@
 "use client"
+import Home from "@/components/Screens/Home";
 import { useAuth } from "@/context/auth-context";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
@@ -29,7 +30,7 @@ const HomePage = () => {
         }
       }, [loading, isAuthenticated, router])
     
-      // Пока идет проверка, показываем индикатор загрузки
+
       if (loading) {
         return (
           <div className="min-h-screen bg-background flex items-center justify-center">
@@ -43,8 +44,8 @@ const HomePage = () => {
         return null
       }
     return(
-        <main>
-            
+        <main className="flex flex-1">
+           <Home/>
         </main>
     );
 }

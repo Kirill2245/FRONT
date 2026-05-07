@@ -105,6 +105,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       void checkAuth()
     }
   }, [checkAuth, isLoggingOut])
+    useEffect(() => {
+    console.log('🟡 AuthProvider эффект, loading:', loading)
+  }, [loading])
 
   const value = useMemo<AuthContextValue>(() => ({
     user,

@@ -30,54 +30,79 @@ import {
   SidebarGroupLabel,
   SidebarGroupContent,
 } from "@/components/ui/sidebar"
-import { useCallback } from "react"
+import { useCallback, useMemo } from "react"
 import { useAuth } from "@/context/auth-context"
+import { useRouter } from "next/navigation" // Добавь useRouter вместо window.location
+
+const EXISTING_ROUTES = [
+  "/home",
+  "/projects", 
+  "/favorites",
+  "/messages",
+  "/balance",
+  "/expenses",
+  "/payment-methods",
+  "/profile",
+  "/notifications",
+  "/ai-settings",
+  "/support",
+  "/help",
+  "/analytics" // когда создашь страницу
+]
 
 const NavigationPanel = () => {
   const pathname = usePathname()
-  const { loading, isAuthenticated, checkAuth, logout: authLogout } = useAuth()
+  const router = useRouter()
+  const { logout: authLogout } = useAuth()
   
-  const sections = [
+  const sections = useMemo(() => [
     {
       label: "ПАНЕЛЬ",
       items: [
-        { href: "/home", label: "Главная", icon: HomeIcon },
-        { href: "/analytics", label: "AI-совпадения", icon: SparklesIcon },
-        { href: "/projects", label: "Мои проекты", icon: FolderIcon },
-        { href: "/favorites", label: "Избранные", icon: HeartIcon },
-        { href: "/messages", label: "Сообщения", icon: MessageCircleIcon },
+        { href: "/home", label: "Главная", icon: HomeIcon, disabled: false },
+        { href: "/analytics", label: "AI-совпадения", icon: SparklesIcon, disabled: false }, // disabled пока нет страницы
+        { href: "/projects", label: "Мои проекты", icon: FolderIcon, disabled: false },
+        { href: "/favorites", label: "Избранные", icon: HeartIcon, disabled: false },
+        { href: "/messages", label: "Сообщения", icon: MessageCircleIcon, disabled: false },
       ],
     },
     {
       label: "ФИНАНСЫ",
       items: [
-        { href: "/balance", label: "Баланс", icon: CoinsIcon },
-        { href: "/expenses", label: "Расходы", icon: TrendingDownIcon },
-        { href: "/payment-methods", label: "Способы оплаты", icon: CreditCardIcon },
+        { href: "/balance", label: "Баланс", icon: CoinsIcon, disabled: false },
+        { href: "/expenses", label: "Расходы", icon: TrendingDownIcon, disabled: false },
+        { href: "/payment-methods", label: "Способы оплаты", icon: CreditCardIcon, disabled: false },
       ],
     },
     {
       label: "НАСТРОЙКИ",
       items: [
-        { href: "/profile", label: "Профиль", icon: UserIcon },
-        { href: "/notifications", label: "Уведомления", icon: BellIcon },
-        { href: "/ai-settings", label: "Настройки AI", icon: CpuIcon },
-        { href: "/support", label: "Поддержка", icon: HeadphonesIcon },
-        { href: "/help", label: "Помощь", icon: HelpCircleIcon },
+        { href: "/profile", label: "Профиль", icon: UserIcon, disabled: false },
+        { href: "/notifications", label: "Уведомления", icon: BellIcon, disabled: false },
+        { href: "/ai-settings", label: "Настройки AI", icon: CpuIcon, disabled: false },
+        { href: "/support", label: "Поддержка", icon: HeadphonesIcon, disabled: false },
+        { href: "/help", label: "Помощь", icon: HelpCircleIcon, disabled: false },
       ],
     },
-  ]
+  ], [])
+  
+  const handleNavigation = (e: React.MouseEvent<HTMLAnchorElement>, href: string, disabled: boolean) => {
+    if (disabled) {
+      e.preventDefault()
+      router.push('/coming-soon') // или показать тост
+    }
+  }
   
   const handleLogout = useCallback(async () => {
     try {
       await authLogout()
-      window.location.href = "/login"
+      router.push("/login")
     } catch (error) {
       console.error("Logout error:", error)
       await authLogout()
-      window.location.href = "/"
+      router.push("/")
     }
-  }, [authLogout])
+  }, [authLogout, router])
   
   return (
     <nav className="flex flex-col h-full">
@@ -88,10 +113,23 @@ const NavigationPanel = () => {
             <SidebarMenu>
               {section.items.map((item) => (
                 <SidebarMenuItem key={item.href}>
-                  <SidebarMenuButton asChild isActive={pathname === item.href}>
-                    <Link href={item.href}>
+                  <SidebarMenuButton 
+                    asChild 
+                    isActive={pathname === item.href}
+                    disabled={item.disabled}
+                  >
+                    <Link 
+                      href={item.disabled ? "#" : item.href}
+                      onClick={(e) => handleNavigation(e, item.href, item.disabled)}
+                      className={item.disabled ? "opacity-50 cursor-not-allowed" : ""}
+                    >
                       <item.icon className="size-4" />
                       <span>{item.label}</span>
+                      {item.disabled && (
+                        <span className="text-xs ml-auto text-muted-foreground">
+                          скоро
+                        </span>
+                      )}
                     </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>

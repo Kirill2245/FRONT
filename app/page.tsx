@@ -14,11 +14,11 @@ export default function LandingPage() {
     const router = useRouter()
     const { loading, isAuthenticated } = useAuth()
   
-    // useEffect(() => {
-    //   if (!loading && isAuthenticated) {
-    //     router.replace("/home")
-    //   }
-    // }, [loading, isAuthenticated, router])
+    useEffect(() => {
+      if (!loading && isAuthenticated) {
+        router.replace("/home")
+      }
+    }, [loading, isAuthenticated, router])
   
     if (loading) {
       return (
