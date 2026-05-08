@@ -52,7 +52,7 @@ export function SideBarWrapper({ children }: { children: React.ReactNode }) {
       <div className="flex min-h-screen w-full">
         <SideBar />
         <div className="flex-1">
-        <div className="fixed -top-2  z-50 flex items-center gap-2 p-4">
+        <div className="fixed -top-2 z-50 flex items-center gap-2 p-4">
             <SidebarTrigger />
         </div>
           {children}
