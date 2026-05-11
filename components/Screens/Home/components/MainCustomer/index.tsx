@@ -6,6 +6,8 @@ import IconProject from '@/public/images/IconProject.svg'
 import IconWastes from '@/public/images/IconWastes.svg'
 import IconSave from '@/public/images/IconSave.svg'
 import IconAccuracy from '@/public/images/IconAccuracy.svg'
+import StatsSection from "./StatsSection"
+import AiTalentsSection from "./AiTalentsSection"
 interface MainCustomerpProps{
     user:{
         id?: string
@@ -60,24 +62,8 @@ const MainCustomer:React.FC<MainCustomerpProps> = ({user}) =>{
                     </p>
                 </header>
             </section>
-
-            <section aria-label="stats-heading" className="flex flex-wrap w-full gap-5" role="list">
-                {
-                    stats.map((item,index) => (
-
-                            <StatsCard 
-                                title={item.title} 
-                                icon={item.icon} 
-                                countStat={item.countStat} 
-                                stat={item.stat} 
-                                key={index} 
-                            
-                            />
-
-                    ))
-                }
-                
-            </section>
+            <StatsSection stats={stats}/>
+            <AiTalentsSection/>
         </div>
     );
 }

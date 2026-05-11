@@ -20,7 +20,7 @@ import type { PortfolioProject } from "./portfolio-builder"
 import { login, register } from "@/services/auth"
 import { createFullMasterProfile, updateProfileImage } from "@/services/profile"
 import { UserRole } from "@/types/user-role.enum"
-import { base64ToFile } from "@/api/helpers/convert"
+import { base64ToFile } from "@/helper/convert"
 import { portfolioApi } from "@/api/services/portfolio"
 
 

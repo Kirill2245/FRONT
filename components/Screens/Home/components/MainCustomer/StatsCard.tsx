@@ -12,7 +12,7 @@ interface StatsCardProps{
 
 const StatsCard: React.FC<StatsCardProps> = ({ stat, icon, title, countStat }) => {
     return (
-        <article className="p-6 rounded-[14px] border-[#F2F2F7] bg-card gap-4 flex flex-col flex-1 min-w-53.5" role="listitem">
+        <article className="p-6 rounded-[14px] border-[#F2F2F7] bg-card gap-4 flex flex-col flex-1 min-w-53.5 " role="listitem">
             <div className="gap-4 flex items-center">
                 <div 
                     className="bg-[#F2F2F7] w-10 h-10 rounded-[10px] flex justify-center items-center"
