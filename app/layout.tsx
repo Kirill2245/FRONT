@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import { AuthProvider } from '@/context/auth-context'
 import './globals.css'
+import { YandexMetrika } from '@/components/analytics/yandex-metrika'
 
 const _geist = Geist({ subsets: ["latin"] });
 const _geistMono = Geist_Mono({ subsets: ["latin"] });
@@ -78,9 +79,12 @@ export default function RootLayout({
       </head>
 
       <body className="font-sans antialiased">
+        
+        <YandexMetrika />
+
         <AuthProvider>{children}</AuthProvider>
         <Analytics />
       </body>
     </html>
   )
-}
+} 
