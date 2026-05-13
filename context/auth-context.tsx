@@ -15,9 +15,12 @@ import { UserRole } from "@/types/user-role.enum"
 export interface AuthUser {
   id?: string
   email?: string
-  firstName?: string
+  firstName: string
   lastName?: string
   role?: UserRole
+  createdAt:string
+  titleImg?:string | undefined
+  emailVerified:boolean
   [key: string]: unknown
 }
 
