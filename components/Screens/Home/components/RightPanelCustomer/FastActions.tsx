@@ -5,7 +5,7 @@ const FastActions = () => {
         {
             title:'Создать проект',
             icon:<Plus color="#101073" size={16}/>,
-            link:"/"
+            link:"/publication"
         },
         {
             title:'Пригласить таланты',

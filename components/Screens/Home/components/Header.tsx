@@ -10,7 +10,7 @@ interface HeaderProps{
 
 const Header:React.FC<HeaderProps> = ({name, avatarLink}) => {
     return (
-        <header className="w-full h-16 pr-6 flex justify-end items-center border-b-[0.8px] border-border/">
+        <header className="w-full h-16 pr-6 flex justify-end items-center border-b-[0.8px] border-border bg-[#FFFFFF]">
             <div className="w-auto flex items-center gap-4">
                 <NotificationIcon hasNotifications = {true}/>
                 <div className="flex gap-3 items-center">

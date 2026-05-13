@@ -13,7 +13,7 @@ const Home = () => {
         <div className=" flex flex-col w-full h-auto min-w-0">
             <Header name={user?.firstName || "N N"} avatarLink={user?.titleImg as string | undefined}/>
             {
-                user?.role !== 'CUSTOMER' ? 
+                user?.role === 'CUSTOMER' ? 
                 <div className="flex flex-1 w-full min-w-0">
                     <MainCustomer user={user}/>
                     <RightPanelCustomer/>

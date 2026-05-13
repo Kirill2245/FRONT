@@ -3,17 +3,17 @@ import { ExternalLink, FileText, List, Plus, UserRoundPlus } from "lucide-react"
 const FastActions = () => {
     const linksActions = [
         {
-            title:'Создать проект',
+            title:'Просмотр проектов',
             icon:<ExternalLink  size={16}/>,
             link:"/"
         },
         {
-            title:'Пригласить таланты',
+            title:'Редактировать портфолио',
             icon:<ExternalLink  size={16}/>,
             link:"/"
         },
         {
-            title:'Смотреть предложения',
+            title:'Посмотреть профиль',
             icon:<ExternalLink  size={16}/>,
             link:"/"
         },
