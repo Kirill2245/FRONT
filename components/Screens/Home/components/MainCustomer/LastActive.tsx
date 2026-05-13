@@ -55,7 +55,7 @@ const LastActive =() => {
         }
     ]
     return (
-        <article className="flex flex-col flex-1 bg-white pl-6.25 pr-6.25 pt-6.25 pb-26.75 rounded-[14px] gap-5">
+        <article className="flex flex-col flex-1 bg-white pl-6.25 pr-6.25 pt-6.25 pb-26.75 rounded-[14px] gap-5  min-w-[291px]">
             <h2 className="text-[#030213] font-semibold text-[20px]">Последняя активность</h2>
             <ul className="flex flex-col gap-4.5">
                 {

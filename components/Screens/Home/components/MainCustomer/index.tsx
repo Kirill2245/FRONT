@@ -71,7 +71,7 @@ const MainCustomer:React.FC<MainCustomerpProps> = ({user}) =>{
 
             <AiTalentsSection/>
 
-            <div className="flex gap-6 ">
+            <div className="flex gap-6 flex-wrap">
                 <LastActive/>
                 <ActiveProject/>
             </div>

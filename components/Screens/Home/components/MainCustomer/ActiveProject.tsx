@@ -48,7 +48,7 @@ const ActiveProject= () => {
     ]
      const displayedData = data.slice(0, 3);
     return (
-        <article className="flex flex-col flex-1 bg-white p-6.25 rounded-[14px] gap-5">
+        <article className="flex flex-col flex-1 bg-white p-6.25 rounded-[14px] gap-5 min-w-[291px]">
             <h2 className="text-[#030213] font-semibold text-[20px]">Активные проекты</h2>
             <ul className="flex flex-col gap-4 owerlow-y-hidden">
                 {displayedData.map((item,index) => (
@@ -79,9 +79,9 @@ const ActiveProject= () => {
                 ))
                 }
             </ul>
-            {data.length >= 3 && <Button className="bg-white border-2 border-[#F2F2F7]">
+            {data.length >= 3 && <a className="bg-white border-2 border-[#F2F2F7] rounded-2xl flex items-center justify-center w-full h-10.5 text-[#030213]">
                 Все проекты
-            </Button>}
+            </a>}
 
         </article>
     );
