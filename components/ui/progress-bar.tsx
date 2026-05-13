@@ -9,7 +9,7 @@ export function ProgressBar({ percent, className = "" }: ProgressBarProps) {
   const clampedPercent = Math.min(100, Math.max(0, percent))
   
   return (
-    <div className={`relative w-59.75 h-1.5 ${className}`}>
+    <div className={`relative w-full h-1.5 ${className}`}>
       {/* Фон */}
       <div className="absolute inset-0 rounded-full bg-[#F2F2F7]" />
       

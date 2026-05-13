@@ -44,7 +44,7 @@ const HomePage = () => {
         return null
       }
     return(
-        <main className="flex flex-1">
+        <main className="flex flex-1 min-w-0 ">
            <Home/>
         </main>
     );

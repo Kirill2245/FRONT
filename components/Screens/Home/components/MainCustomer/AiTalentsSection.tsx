@@ -30,7 +30,7 @@ const AiTalentsSection = () => {
             price:9500,
             variantPay:"Час",
         },
-                {
+        {
             name:"Сара Чен",
             specialization:"Старший UI/UX дизайнер",
             aiMatch:36,
@@ -48,10 +48,10 @@ const AiTalentsSection = () => {
             price:9500,
             variantPay:"Час",
         },
-
+        
     ]
     return (
-        <section className="flex flex-col gap-5 w-full">
+        <section className="flex flex-col gap-5 w-full min-w-0 max-w-full overflow-hidden" >
             <header className="flex justify-between w-full items-center">
                 <div className="flex flex-col gap-1 ">
                     <h2 className="text-[#030213] text-[20px] font-semibold">Таланты, рекомендованные AI</h2>
@@ -64,14 +64,16 @@ const AiTalentsSection = () => {
                     Все совпадения →
                 </a>
             </header>
-            <div className="w-full overflow-x-auto overflow-y-hidden">
-            <ul className="flex gap-5 pb-4" style={{ width: 'max-content' }}>
-                {masters.map((master, index) => (
-                <li key={index} className="shrink-0">
-                    <MasterCard {...master} />
-                </li>
-                ))}
-            </ul>
+            <div className="grid grid-cols-1">
+                <div className="overflow-x-auto">
+                <div className="flex gap-5 pb-4 px-4">
+                    {masters.map((master, index) => (
+                    <div key={index} className="shrink-0 w-[296px]">
+                        <MasterCard {...master} />
+                    </div>
+                    ))}
+                </div>
+                </div>
             </div>
         </section>
     );

@@ -8,6 +8,9 @@ import IconSave from '@/public/images/IconSave.svg'
 import IconAccuracy from '@/public/images/IconAccuracy.svg'
 import StatsSection from "./StatsSection"
 import AiTalentsSection from "./AiTalentsSection"
+
+import LastActive from "./LastActive"
+import ActiveProject from "./ActiveProject"
 interface MainCustomerpProps{
     user:{
         id?: string
@@ -47,7 +50,7 @@ const MainCustomer:React.FC<MainCustomerpProps> = ({user}) =>{
     ]
     return (
         <div 
-            className="flex flex-col w-full h-screen pl-6 pr-6 pt-6 pb-6 gap-8 gradient-bg"
+            className="flex flex-1 flex-col h-auto w-full pl-6 pr-6 pt-6 pb-6 gap-8 gradient-bg min-w-0"
             style={{
                 background: 'linear-gradient(121deg, rgba(99, 99, 164, 0.32) 9.61%, rgba(208, 194, 155, 0.12) 83.17%, rgba(220, 204, 154, 0.10) 99.99%)'
             }}
@@ -62,8 +65,16 @@ const MainCustomer:React.FC<MainCustomerpProps> = ({user}) =>{
                     </p>
                 </header>
             </section>
+            {/* <SimpleTest /> */}
             <StatsSection stats={stats}/>
+
+
             <AiTalentsSection/>
+
+            <div className="flex gap-6 ">
+                <LastActive/>
+                <ActiveProject/>
+            </div>
         </div>
     );
 }

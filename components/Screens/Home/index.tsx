@@ -8,11 +8,11 @@ const Home = () => {
     const {user} = useAuth()
     useEffect(() => {console.log(user)},[])
     return (
-        <div className="w-full h-auto">
+        <div className=" flex flex-col w-full h-auto min-w-0">
             <Header name={user?.firstName || "N N"} avatarLink={user?.titleImg as string | undefined}/>
             {
                 user?.role === 'CUSTOMER' ? 
-                <div className="flex flex-1">
+                <div className="flex flex-1 w-full min-w-0">
                     <MainCustomer user={user}/>
                     <RightPanelCustomer/>
                 </div>
