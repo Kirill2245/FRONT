@@ -12,5 +12,7 @@ export const generateMockFreelancers = (page: number, limit: number): Freelancer
         price: 500 + Math.random() * 5000,
         avatar: `https://randomuser.me/api/portraits/${Math.random() > 0.5 ? 'men' : 'women'}/${Math.floor(Math.random() * 100)}.jpg`,
         skills: mockSkills.sort(() => 0.5 - Math.random()).slice(0, 3),
+        description:'Создание масштабируемых веб-приложений с использованием eworks. 10+ years experience.',
+        specialization:'Старший UI/UX дизайнер'
     }));
 };

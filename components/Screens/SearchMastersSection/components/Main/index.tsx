@@ -19,7 +19,7 @@ const Main = () => {
 
     return (
         <div 
-            className="flex flex-col flex-1 h-screen p-6 overflow-y-auto"
+            className="flex flex-col flex-1 p-6 "
             style={{
                 background: 'linear-gradient(127.16deg, rgba(99, 99, 164, 0.32) 27.97%, rgba(220, 204, 154, 0.1) 82.51%)'
             }}

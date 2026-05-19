@@ -5,4 +5,7 @@ export interface Freelancer {
     price: number;
     avatar: string;
     skills: string[];
+    description: string
+    status?: string;
+    specialization:string
 }
