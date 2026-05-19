@@ -16,6 +16,7 @@ interface ToggleSwitchProps {
   rightClassName?: string;
   activeClassName?: string;
   inactiveClassName?: string;
+  sliderClassName?: string;
 }
 
 const ToggleSwitch = ({
@@ -27,6 +28,7 @@ const ToggleSwitch = ({
   rightClassName,
   activeClassName = 'text-[#0A0A0A]',
   inactiveClassName = 'text-[#4A5565]',
+  sliderClassName
 }: ToggleSwitchProps) => {
   const [active, setActive] = useState<'left' | 'right'>(defaultValue);
 
@@ -56,7 +58,7 @@ const ToggleSwitch = ({
     >
       <motion.div
         layout
-        className="absolute top-1 bottom-1 bg-white rounded-md shadow-[0px_1px_2px_-1px_rgba(0,0,0,0.1),_0px_1px_3px_0px_rgba(0,0,0,0.1)]"
+        className={cn('absolute top-1 bottom-1 bg-white rounded-md shadow-[0px_1px_2px_-1px_rgba(0,0,0,0.1),_0px_1px_3px_0px_rgba(0,0,0,0.1)]',sliderClassName)}
         initial={false}
         animate={{
           x: active === 'left' ? 0 : '100%',

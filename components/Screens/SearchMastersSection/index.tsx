@@ -2,8 +2,10 @@ import { Button } from "@/components/ui/button";
 import LeftPanel from "./components/LeftPanel";
 import Main from "./components/Main";
 import RightPanel from "./components/RightPanel";
+import { useState } from "react";
 
 const SearchMastersSection = () => {
+    const [isVisibleProfile, setIsVisibleProfile] = useState(false)
     return (
         <section className="flex flex-col flex-1 "
         >
@@ -17,7 +19,10 @@ const SearchMastersSection = () => {
             <div className="flex flex-1">
                 <LeftPanel/>
                 <Main/>
-                <RightPanel/>
+                {
+                    isVisibleProfile && <RightPanel/>
+                }
+                
             </div>
         
         </section>
