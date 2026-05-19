@@ -1,5 +1,3 @@
-// components/Screens/SearchMastersSection/components/FreelancerCard.tsx
-import { Star } from 'lucide-react';
 import { Freelancer } from '../../types/freelancer.types';
 import StarIcon from '@/public/icons/StarIcon';
 import { formatPriceNumber } from '@/helper/formatPriceNumber';
@@ -47,31 +45,69 @@ const FreelancerCard = ({ freelancer, viewMode }: FreelancerCardProps) => {
         );
     }
     
+
     return (
-        <div className="bg-white rounded-xl p-4 shadow-sm hover:shadow-md transition-shadow flex items-center gap-4">
-            <img 
-                src={freelancer.avatar} 
-                alt={freelancer.name}
-                className="w-12 h-12 rounded-full object-cover"
-            />
-            <div className="flex-1">
-                <div className="flex items-center justify-between mb-1">
-                    <h4 className="font-semibold text-[#101828]">{freelancer.name}</h4>
-                    <div className="flex items-center gap-1">
-                        <span className="text-yellow-500">★</span>
-                        <span className="text-sm text-[#6A7282]">{freelancer.rating.toFixed(1)}</span>
+        <div className="bg-white p-4 shadow-sm hover:shadow-md transition-shadow border-b border-[#F2F2F7]">
+            <div className="grid grid-cols-12 gap-4 items-center">
+
+                <div className="col-span-3 flex items-center gap-3">
+                    <img 
+                        src={freelancer.avatar} 
+                        alt={freelancer.name}
+                        className="w-10 h-10 rounded-full object-cover"
+                    />
+                    <div>
+                        <h4 className="font-semibold text-[#101828] text-sm">{freelancer.name}</h4>
+                        <span className="text-xs text-[#6A7282]">{freelancer.specialization}</span>
                     </div>
                 </div>
-                <div className="flex flex-wrap gap-2 mb-2">
-                    {freelancer.skills.map((skill, idx) => (
-                        <span key={idx} className="text-xs bg-[#F2F2F7] px-2 py-1 rounded">
-                            {skill}
-                        </span>
-                    ))}
+
+
+                <div className="col-span-2">
+                    <div className="flex items-center gap-1">
+                        <StarIcon size={14} />
+                        <span className="text-sm font-medium text-[#101828]">{freelancer.rating.toFixed(1)}</span>
+                    </div>
                 </div>
-                <div className="flex justify-between items-center">
-                    <span className="text-lg font-bold text-[#101073]">{freelancer.price.toLocaleString()} ₽</span>
-                    <button className="text-sm text-[#101073] hover:underline">Подробнее</button>
+
+
+                <div className="col-span-3">
+                    <div className="flex flex-wrap gap-1">
+                        {freelancer.skills.slice(0, 3).map((skill, idx) => (
+                            <span key={idx} className="text-xs bg-[#F2F2F7] px-2 py-0.5 rounded">
+                                {skill}
+                            </span>
+                        ))}
+                        {freelancer.skills.length > 3 && (
+                            <span className="text-xs text-[#6A7282]">+{freelancer.skills.length - 3}</span>
+                        )}
+                    </div>
+                </div>
+
+
+                <div className="col-span-2 text-right">
+                    <span className="text-base font-bold text-[#101828]">
+                        ₽{formatPriceNumber(+freelancer.price.toFixed(0))}
+                    </span>
+                    <span className="text-xs text-[#4A5565]">/час</span>
+                </div>
+
+                <div className="col-span-2 flex items-center justify-end gap-3">
+
+                    <span className={`text-xs px-2 py-1 rounded-full ${
+                        freelancer.status === 'available' 
+                            ? 'bg-green-100 text-green-700' 
+                            : freelancer.status === 'busy'
+                            ? 'bg-red-100 text-red-700'
+                            : 'bg-blue-100 text-blue-700'
+                    }`}>
+                        {freelancer.status === 'available' ? 'Доступно' : 
+                         freelancer.status === 'busy' ? 'Занят' : 'Online'}
+                    </span>
+
+                    <Button variant="outline" size="sm" className="text-xs">
+                        Смотреть
+                    </Button>
                 </div>
             </div>
         </div>
