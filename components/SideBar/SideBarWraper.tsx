@@ -11,7 +11,8 @@ const NO_SIDEBAR_PATHS = [
   "/reset-password",
   "/coming-soon",
   "/maintenance",
-  "/analytics"
+  "/analytics",
+  "/search-masters"
 ]
 
 export function SideBarWrapper({ children }: { children: React.ReactNode }) {

@@ -20,6 +20,7 @@ import {
   CpuIcon,
   HeadphonesIcon,
   HelpCircleIcon,
+  UserSearch,
 } from "lucide-react"
 
 import {
@@ -62,6 +63,7 @@ const NavigationPanel = () => {
         { href: "/home", label: "Главная", icon: HomeIcon, disabled: false },
         { href: "/analytics", label: "AI-совпадения", icon: SparklesIcon, disabled: false }, // disabled пока нет страницы
         { href: "/projects", label: "Мои проекты", icon: FolderIcon, disabled: false },
+        { href: "/search-masters", label: "Найти фрилансера", icon: UserSearch, disabled: false },
         { href: "/favorites", label: "Избранные", icon: HeartIcon, disabled: false },
         { href: "/messages", label: "Сообщения", icon: MessageCircleIcon, disabled: false },
       ],
