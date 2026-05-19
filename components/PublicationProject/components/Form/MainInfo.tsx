@@ -9,7 +9,9 @@ interface MainInfoProps {
         category: string;
     };
     updateFormData: (key: string, value: string) => void;
+    externalProjectName?:string | null
 }
+
 const MainInfo:React.FC<MainInfoProps> = ({ formData, updateFormData }) => {
     const selectData = [
         {

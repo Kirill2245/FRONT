@@ -8,10 +8,10 @@ interface AISectionProps{
     description?:boolean,
     skils?:boolean,
     budget?:boolean,
-    params?:boolean
+    attachments?:boolean
 }
-const AISection:React.FC<AISectionProps> = ({name = false, category = false, description = false, skils = false, budget = false, params = false}) => {
-    const data = [name, category, description, skils, budget, params]
+const AISection:React.FC<AISectionProps> = ({name = false, category = false, description = false, skils = false, budget = false, attachments = false}) => {
+    const data = [name, category, description, skils, budget, attachments]
     const trueData = data.filter(item => item === true)
     const countFill = ((trueData.length / data.length) * 100).toFixed(1)
     const fillDataMarcker = [
@@ -36,8 +36,8 @@ const AISection:React.FC<AISectionProps> = ({name = false, category = false, des
             fill:budget
         },
         {
-            name:"Дополнительные параметры",
-            fill:params
+            name:"Вложения",
+            fill:attachments
         },
     ]
     return (

@@ -1,5 +1,6 @@
 "use client"
-import Publication from "@/components/Publication";
+
+import PublicationProject from "@/components/PublicationProject";
 import Home from "@/components/Screens/Home";
 import { useAuth } from "@/context/auth-context";
 import { UserRole } from "@/types/user-role.enum";
@@ -51,7 +52,7 @@ const PublicationPage = () => {
       }
     return(
         <main className="flex flex-1 min-w-0 h-auto bg-[#FBFBFD]">
-            <Publication/>
+            <PublicationProject/>
         </main>
     );
 }
