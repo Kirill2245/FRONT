@@ -5,7 +5,8 @@ import RightPanel from "./components/RightPanel";
 
 const SearchMastersSection = () => {
     return (
-        <section className="flex flex-col flex-1 ">
+        <section className="flex flex-col flex-1 "
+        >
             <header className="flex justify-between py-5 px-6 border-b border-b-[#F2F2F7]">
                 <h2 className="text-[#101828] text-2xl font-bold">Найди фрилансера</h2>
                 <div className="flex gap-3">

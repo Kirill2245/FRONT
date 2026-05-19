@@ -1,6 +1,6 @@
 const LeftPanel = () => {
     return (
-        <aside>
+        <aside className="w-70">
 
         </aside>
     );

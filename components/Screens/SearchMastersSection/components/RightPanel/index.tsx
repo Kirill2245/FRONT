@@ -1,6 +1,6 @@
 const RightPanel = () => {
     return (
-        <aside>
+        <aside className="w-95">
 
         </aside>
     );

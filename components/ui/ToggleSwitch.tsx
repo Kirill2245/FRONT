@@ -2,8 +2,13 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils'; 
 
+interface ToggleOption {
+  label: string;
+  icon?: React.ReactNode;
+}
+
 interface ToggleSwitchProps {
-  options: [string, string]; 
+  options: [string | ToggleOption, string | ToggleOption];
   defaultValue?: 'left' | 'right';
   onChange?: (value: 'left' | 'right') => void;
   className?: string;
@@ -30,6 +35,18 @@ const ToggleSwitch = ({
     onChange?.(value);
   };
 
+  const getOptionContent = (option: string | ToggleOption) => {
+    if (typeof option === 'string') {
+      return option;
+    }
+    return (
+      <div className="flex items-center justify-center gap-2">
+        {option.icon}
+        <span>{option.label}</span>
+      </div>
+    );
+  };
+
   return (
     <div
       className={cn(
@@ -51,25 +68,25 @@ const ToggleSwitch = ({
       <button
         type="button"
         className={cn(
-          'flex-1 relative z-10 rounded-md transition-all duration-200',
+          'flex-1 relative z-10 rounded-md transition-all duration-200 flex items-center justify-center',
           active === 'left' ? activeClassName : inactiveClassName,
           leftClassName
         )}
         onClick={() => handleToggle('left')}
       >
-        {options[0]}
+        {getOptionContent(options[0])}
       </button>
 
       <button
         type="button"
         className={cn(
-          'flex-1 relative z-10 rounded-md transition-all duration-200',
+          'flex-1 relative z-10 rounded-md transition-all duration-200 flex items-center justify-center',
           active === 'right' ? activeClassName : inactiveClassName,
           rightClassName
         )}
         onClick={() => handleToggle('right')}
       >
-        {options[1]}
+        {getOptionContent(options[1])}
       </button>
     </div>
   );
