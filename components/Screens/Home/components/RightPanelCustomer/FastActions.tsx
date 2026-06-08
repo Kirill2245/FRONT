@@ -10,7 +10,7 @@ const FastActions = () => {
         {
             title:'Пригласить таланты',
             icon:<UserRoundPlus color="#101073" size={16}/>,
-            link:"/"
+            link:"/search-masters"
         },
         {
             title:'Смотреть предложения',

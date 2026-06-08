@@ -5,14 +5,20 @@ import * as SliderPrimitive from '@radix-ui/react-slider'
 
 import { cn } from '@/lib/utils'
 
+interface SliderProps extends React.ComponentProps<typeof SliderPrimitive.Root> {
+  color?: string // цвет для бегунка и заполненной части трека
+}
+
 function Slider({
   className,
   defaultValue,
   value,
   min = 0,
   max = 100,
+  color,
+  style,
   ...props
-}: React.ComponentProps<typeof SliderPrimitive.Root>) {
+}: SliderProps) {
   const _values = React.useMemo(
     () =>
       Array.isArray(value)
@@ -30,6 +36,12 @@ function Slider({
       value={value}
       min={min}
       max={max}
+      style={
+        {
+          ...style,
+          ...(color ? { '--primary': color } : {}),
+        } as React.CSSProperties
+      }
       className={cn(
         'relative flex w-full touch-none items-center select-none data-[disabled]:opacity-50 data-[orientation=vertical]:h-full data-[orientation=vertical]:min-h-44 data-[orientation=vertical]:w-auto data-[orientation=vertical]:flex-col',
         className,
