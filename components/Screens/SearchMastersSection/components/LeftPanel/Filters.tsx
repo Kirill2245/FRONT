@@ -15,7 +15,7 @@ const Filters = () => {
         1
     ]
     return (
-        <div className="flex flex-col gap-3 ">
+        <div className="flex flex-col gap-4 ">
             <h4 className="text-[#6A7282] text-[14px] font-bold">ФИЛЬТРЫ</h4>
             <div className="flex justify-between p-3.25 items-center bg-[#FBFBFD] rounded-[10px] border border-[#F2F2F7]}">
                 <span className="text-[#101828] text-[14px]">Доступно сечас</span>
