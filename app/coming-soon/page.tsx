@@ -17,7 +17,7 @@ export default function ComingSoonPage() {
   const { loading, isAuthenticated, checkAuth, logout: authLogout } = useAuth()
   
   const targetDate = useMemo(() => {
-    const date = new Date('2026-04-21T00:00:00')
+    const date = new Date('2026-11-21T00:00:00')
     date.setDate(date.getDate() + 56)
     return date
   }, [])
