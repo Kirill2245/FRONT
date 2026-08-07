@@ -21,4 +21,13 @@ export const API_ENDPOINTS = {
     UPDATE_IMAGE: "/user-profile/update-image",
     CREATE_PORTFOLIO_POST: "/user-profile/portfolio/create-post"
   },
+  COURSE:{
+    CREATE_LECTION:"/lections/create",
+    CHECK_ANSWERS:'/tests/check-test',
+    GET_CATEGORYS:'/lections/category-lections',
+    GET_LECTION:'/lections/find-lection',
+    GET_LECTIONS_CATEGORY:'/lections/lection-for-category',
+    GET_TEST:'/tests/find-test',
+    GET_RESULT_TEST:'/tests/find-result-test'
+  }
 } as const
