@@ -86,6 +86,10 @@ export default function Sertificate(props: SertificateProps) {
                 <span className="text-[#6E6E73]">·</span>
                 <span className="text-[#6E6E73] text-[14px]"> Light ID: LT-2026-ABC123 </span>
             </div>
+            <div className="flex flex-col gap-2.25 items-center">
+                <div className="w-32 border-[0.5px] border-[#6E6E73]"></div>
+                <span className="text-[#6E6E73] text-xs"> Генеральный директор Light AI </span>
+            </div>
         </div>
     );
 }

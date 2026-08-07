@@ -1,15 +1,20 @@
+"use client"
+
 import { TestResultResponse } from "@/api/dto/course/course.dto";
 import ResultHeader from "./ResultHeader";
 import Sertificate from "./Sertificate";
 import ControllerButton from "./ControllerButton";
+import { useState } from "react";
+import SharpResult from "./SharpResult";
 interface ResultTestProps{
     result:TestResultResponse;
     testId:string | null;
 }
 
 export default function ResultTest({result, testId}: ResultTestProps){
+    const [showSharp, isShowSharp] = useState(false)
     return (
-        <section className="flex flex-col items-center justify-center bg-[#ebebf5] w-full h-auto gap-7.5 p-12">
+        <section className="flex flex-1 flex-col items-center justify-center bg-[#ebebf5] w-full  gap-7.5 p-12 relative">
             <ResultHeader 
                 trueAnswer={result.countTrueAnswers} 
                 falseAnswer={result.countFalseAnswers} 
@@ -25,10 +30,11 @@ export default function ResultTest({result, testId}: ResultTestProps){
                         user_name={result.user.firstName} 
                         title={result.lection.title}
                     />
-                    <ControllerButton/>
+                    <ControllerButton openSharpModal={() => isShowSharp(true)}/>
                 </div>
                 
             )}
+            {showSharp && <SharpResult onClose={() => isShowSharp(false)}/>}
             
         </section>
     );
